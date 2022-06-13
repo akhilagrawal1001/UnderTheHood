@@ -7,11 +7,14 @@ module xnorMod(A, B, C);
     assign C = (A & B) | (~A & ~B);
 endmodule
 
+//test bench
+
 module tb;
     reg A, B;
     wire C;
     xnorMod ans(A, B, C);
 
+    //testing for different inputs
     initial begin
         A = 1;
         B = 1;
