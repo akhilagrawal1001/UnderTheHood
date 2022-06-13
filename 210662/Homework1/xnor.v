@@ -3,7 +3,7 @@ module old(A, B, C);
     input A;
     input B;
     output C;
-    assign C= A | B;
+    assign C= (A & B) |(~A & ~B);
 endmodule
 module new;
     reg A,B;
