@@ -7,11 +7,14 @@ module orMod(A, B, C);
     assign C = A|B;
 endmodule
 
+//test bench
+
 module tb;
     reg A, B;
     wire C;
     orMod ans(A, B, C);
-
+    
+    //testing for different states of A and B
     initial begin
         A = 1;
         B = 1;
