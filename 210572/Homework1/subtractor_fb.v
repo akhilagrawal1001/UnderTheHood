@@ -21,14 +21,14 @@ module four_bit_subtractor(A, B, C_in, R, C_out); // four_bit_subtractor module
 
 endmodule
 
-module eight_bit_subtractor(A, B, R, C_out);
+module eight_bit_subtractor(A, B, R, C_out); // eight_bit_subtractor module
 
     input [7:0] A, B;
     output [7:0] R, C_out;
 
-    four_bit_subtractor four_bit_subtractor1(A[3:0], B[3:0], 1'b1, R[3:0], C_out[3:0]);
+    four_bit_subtractor four_bit_subtractor1(A[3:0], B[3:0], 1'b1, R[3:0], C_out[3:0]); // call one
 
-    four_bit_subtractor four_bit_subtractor2(A[7:4], B[7:4], C_out[3], R[7:4], C_out[7:4]);
+    four_bit_subtractor four_bit_subtractor2(A[7:4], B[7:4], C_out[3], R[7:4], C_out[7:4]); // call two
 
 endmodule
 
