@@ -1,0 +1,56 @@
+#! /c/iverilog/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-965-g55e06db6)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "E:\iverilog\lib\ivl\system.vpi";
+:vpi_module "E:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "E:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "E:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "E:\iverilog\lib\ivl\va_math.vpi";
+S_00000000001ced70 .scope module, "xnor_tb" "xnor_tb" 2 1;
+ .timescale 0 0;
+v00000000001c7610_0 .var "A", 0 0;
+v00000000008724d0_0 .var "B", 0 0;
+v0000000000872570_0 .net "C", 0 0, L_0000000000872e70;  1 drivers
+S_00000000001c73e0 .scope module, "gates" "xnor_gate" 2 5, 3 1 0, S_00000000001ced70;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /OUTPUT 1 "c";
+L_0000000000872d10 .functor XOR 1, v00000000001c7610_0, v00000000008724d0_0, C4<0>, C4<0>;
+L_0000000000872e70 .functor NOT 1, L_0000000000872d10, C4<0>, C4<0>, C4<0>;
+v0000000000872fd0_0 .net *"_ivl_0", 0 0, L_0000000000872d10;  1 drivers
+v00000000008a66d0_0 .net "a", 0 0, v00000000001c7610_0;  1 drivers
+v00000000001cef00_0 .net "b", 0 0, v00000000008724d0_0;  1 drivers
+v00000000001c7570_0 .net "c", 0 0, L_0000000000872e70;  alias, 1 drivers
+    .scope S_00000000001ced70;
+T_0 ;
+    %vpi_call 2 7 "$monitor", "A = %b, B = %b , C = %b", v00000000001c7610_0, v00000000008724d0_0, v0000000000872570_0 {0 0 0};
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000000001c7610_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000000008724d0_0, 0, 1;
+    %delay 12, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000000001c7610_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v00000000008724d0_0, 0, 1;
+    %delay 12, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v00000000001c7610_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000000008724d0_0, 0, 1;
+    %delay 12, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v00000000001c7610_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v00000000008724d0_0, 0, 1;
+    %delay 12, 0;
+    %end;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "xnor_gate_tb.v";
+    "xnor_gate.v";
