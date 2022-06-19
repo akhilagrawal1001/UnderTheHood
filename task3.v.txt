@@ -1,0 +1,80 @@
+module fsm(input [4:0] inp, output reg [1:0] s);
+
+    reg [1:0] state;
+
+    initial begin
+        s=2'b00;
+    end
+
+    always @(inp) begin
+        if (s==2'b00) begin
+            if(inp>5'b10010) state = 2'b01;
+            else if(inp<5'b01100) state=2'b10;
+            else state=s;
+        end
+        else if (s==2'b01) begin
+            if(inp<5'b01110) state=2'b00;
+            else if(inp<5'b01000) state = 2'b10;
+            else state=s;
+        end
+        else  begin
+            if(inp>5'b11010) state = 2'b01;
+            else if(inp>5'b10100) state=2'b01;
+            else state=s;
+        end
+        s = state;
+    end
+
+endmodule
+
+
+module tb;
+
+    reg [4:0] inp;
+    wire [1:0]s;
+
+    fsm f(inp, s);
+    initial begin
+        inp = 5'b00001;
+        $display("sb = %b", s);
+        #10;
+        $display("saf = %b", s);
+        inp = 5'b11111;
+        $display("sb = %b", s);
+        #10;
+        $display("saf = %b", s);
+        inp = 5'b00011;
+        $display("sb = %b", s);
+        #10;
+        $display("saf = %b", s);
+         inp = 5'b01001;
+        $display("sb = %b", s);
+        #10;
+        $display("saf = %b", s);
+         inp = 5'b10001;
+        $display("sb = %b", s);
+        #10;
+        $display("saf = %b", s);
+         inp = 5'b11001;
+        $display("sb = %b", s);
+        #10;
+        $display("saf = %b", s);
+         inp = 5'b11101;
+        $display("sb = %b", s);
+        #10;
+        $display("saf = %b", s);
+         inp = 5'b00111;
+        $display("sb = %b", s);
+        #10;
+        $display("saf = %b", s);
+         inp = 5'b11000;
+        $display("sb = %b", s);
+        #10;
+        $display("saf = %b", s);
+         inp = 5'b01100;
+        $display("sb = %b", s);
+        #10;
+        $display("saf = %b", s);
+        $finish;
+    end
+endmodule

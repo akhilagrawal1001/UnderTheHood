@@ -1,0 +1,57 @@
+module one_bit_adder (
+    input a, b, d ,input [1:0]op, output r, c_out 
+);  
+    if((op[0]==0)&&(op[1]==1))assign r =(~a|b|(~c_in))&(~a|(~b)|c_in)&(a|(~c_in)|b) ;
+    else if((op[0]==1)&&(op[1]==0))assign r =(a|~b|(~c_in))&(a|b|c_in)&((~a)|(~c_in)|~b) ;
+    else assign r =(a|b|(~c_in))&(a|(~b)|c_in)&((~a)|(~c_in)|b) ;
+    if((op[0]==0)&&(op[1]==1)) assign c_out = (c_in|~a|(~d))&(c_in|a|d)&((~c_in)|~a|(~d));
+    else if((op[0]==1)&&(op[1]==1))assign c_out = (c_in|a|d)&(c_in|(~a)|~d)&((~c_in)|a|d);
+    else assign c_out = (c_in|a|(~d))&(c_in|(~a)|d)&((~c_in)|a|(~d));
+    
+endmodule
+
+module eight_bit_adder(
+    input wire [7:0] a, b, d,input [1:0]op,
+    output wire [7:0] r, output wire c_out);
+
+    wire [7:0] c;
+    one_bit_adder adder0 (a[0], b[0],d[0], op, (op[0]|op[1]), r[0], c[0]);
+    one_bit_adder adder1 (a[1], b[1],d[1],op, c[0], r[1], c[1]);
+    one_bit_adder adder2 (a[2], b[2],d[2],op, c[1], r[2], c[2]);
+    one_bit_adder adder3 (a[3], b[3],d[3],op, c[2], r[3], c[3]);
+    one_bit_adder adder4 (a[4], b[4],d[4],op, c[3], r[4], c[4]);
+    one_bit_adder adder5 (a[5], b[5],d[5],op, c[4], r[5], c[5]);
+    one_bit_adder adder6 (a[6], b[6],d[6],op, c[5], r[6], c[6]);
+    one_bit_adder adder7 (a[7], b[7],d[7],op, c[6], r[7], c[7]);
+    assign c_out = c[7];
+    
+endmodule
+module tb;
+
+    reg [7:0] A, B, D;
+    wire [7:0] R;
+    wire [1:0] op;
+    wire C_out;
+
+    eight_bit_adder adder(A, B, D, op, R, C_out);
+
+    initial begin
+        A = 0;
+        B = 0;
+        D = 0;
+        op =2'b00;
+        #2;
+
+        $monitor("A = %b, B = %b,D = %b, op=%b, R = %b, Carry = %b", A, B, D, op, R, C_out);
+
+        repeat(10) begin
+            A = $random;
+            B = $random;
+            D = $random;
+            op = $random;
+            #15;
+        end
+    
+    end
+
+endmodule
