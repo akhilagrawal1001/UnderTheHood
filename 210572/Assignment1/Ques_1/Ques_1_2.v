@@ -11,30 +11,30 @@ module Calculator(A, B, C, OP, R, C_out);
 
     eight_bit_adder eight_bit_adder_3(X, Y, Z, C_in, R, C_out);
 
-    initial begin
+    always @(A or B or C) begin
         if (OP == 0) begin
             C_in = 0;
-            X = A;
-            Y = B;
-            Z = C;
+            assign X = A;
+            assign Y = B;
+            assign Z = C;
             //$display("X = %b, Y = %b, Z = %b, OP = %b, C_in = %b, R = %b", X, Y, Z, OP, C_in, R);
         end else if(OP == 1) begin
             C_in = 1;
-            X = ~A;
-            Y = B;
-            Z = C;
+            assign X = ~A;
+            assign Y = B;
+            assign Z = C;
             //$display("X = %b, Y = %b, Z = %b, C_in = %b, OP = %b, R = %b", X, Y, Z, OP, C_in, R);
         end else if(OP == 2) begin
             C_in = 1;
-            X = A;
-            Y = ~B;
-            Z = C;
+            assign X = A;
+            assign Y = ~B;
+            assign Z = C;
             //$display("X = %b, Y = %b, Z = %b, C_in = %b, OP = %b, R = %b", X, Y, Z, OP, C_in, R);
         end else begin
             C_in = 1;
-            X = A;
-            Y = B;
-            Z = ~C;
+            assign X = A;
+            assign Y = B;
+            assign Z = ~C;
             //$display("X = %b, Y = %b, Z = %b, C_in = %b, OP = %b, R = %b", X, Y, Z, OP, C_in, R);
         end
     end
