@@ -1,9 +1,9 @@
 module one_bit_adder (
-    input a, b, c, c_in, output r, c_out 
+    input b1, b2, b3, c_in, output r, c_out 
 );  
 
-    assign r = (b | ~c_in) &(a | ~b | c_in);
-    assign c_out = (a | ~c) & (c_in | ~a | c);
+    assign r = (b2&c_in) | (b1&b2) | (~b2&~c_in);
+    assign c_out = (b1&b3) | (c_in&b1) | (~b1&~b3);
     
 endmodule
 
@@ -29,29 +29,69 @@ endmodule
 module calc(A, B, C, op, res, C_out);  
 
     input [7:0] A, B, C;
-    input [2:0] op;
+    input [1:0] op;
     output [7:0] res;
     output C_out;
 
+    reg [7:0] Ac, Bc, Cc;
     reg c_in;
 
     always @(A or B or C) begin
         if (op == 2'b00) begin
-            assign c_in = 0;
+            Ac = A;
+            Bc = B;
+            Cc = C;
+            c_in = 0;
         end else if (op == 2'b01) begin
-            assign A = ~A;
-            assign c_in = 1;
+            Ac = ~A + 1;
+            Bc = B;
+            Cc = C;
+            c_in = 0;
         end else if (op == 2'b10) begin
-            assign B = ~B;
-            assign c_in = 1;
+            Ac = A;
+            Bc = ~B + 1;
+            Cc = C;
+            c_in = 0;
         end else if (op == 2'b11) begin
-            assign C = ~C;
-            assign c_in = 1;
+            Ac = A;
+            Bc = B;
+            Cc = ~C + 1;
+            c_in = 0;
         end
 
-        //eight_bit_adder sp_adder (A, B, C, 0, res, C_out);
+
     end
 
-    eight_bit_adder sp_adder (A, B, C, 1'b0, res, C_out);
+    eight_bit_adder sp_adder (Ac, Bc, Cc, 1'b0, res, C_out);
+
+endmodule
+
+module tb;
+    reg [7:0] A, B, C;
+    reg [1:0] op;
+    wire [7:0] R;
+    wire c_out;
+
+    calc mycalc(A, B, C, op, R, c_out);
+
+    initial begin
+        A = 0;
+        B = 0;
+        C = 0;
+        op = 0;
+    
+
+        $monitor("A = %b, B = %b, C = %b, op=%b, R = %b, Carry = %b", A, B, C, op, R, c_out);
+
+        repeat(10) begin
+            A = $random;
+            B = $random;
+            C = $random;
+            op = $random;
+
+            #15;
+        end
+
+    end
 
 endmodule
