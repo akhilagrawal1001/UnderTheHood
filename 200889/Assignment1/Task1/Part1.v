@@ -1,5 +1,5 @@
 module func(input A,B,C,D, output R);
-    assign R = (A|B|C|~D)&(A|B|~C|~D)&(A|~B|C|D)&(A|~B|~C|D)&(~A|B|C|~D)&(~A|B|~C|~D);
+    assign R = ((A)|(~B|D))&(B|~D);
 endmodule
 
 module one_bit_adder (a, b, c, c_in, r, c_out );
