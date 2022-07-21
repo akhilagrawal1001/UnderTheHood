@@ -1,4 +1,4 @@
-`include "4_bit_subtr.v"
+`include "3_4_bit_subtr.v"
 
 module tb;
 
