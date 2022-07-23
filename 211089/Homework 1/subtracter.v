@@ -2,7 +2,7 @@ module one_bit_subtract (
     input a, b, c_in, output r, c_out 
 );  
     assign r = (a ^ b) ^ c_in;
-    assign c_out = ((c_in &((a^b)^1'b1)) | ((a^1'b1) & b));
+    assign c_out = ((a&(b^1'b1)) | ((b^1'b1) &c_in) | (a & c_in));
     
 endmodule
 
